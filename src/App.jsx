@@ -1,19 +1,17 @@
-import{BroswerRouter, Route, Routes} from "react-router-dom";
+import{BrowserRouter, Route, Routes} from "react-router-dom";
 import { Home } from "./pages/Home";
 import { NotFound } from "./pages/NotFound";
 
 function App() {
-  
-
   return (
     <>
-    <BorswerRouter>
+    <BrowserRouter>
       <Routes>
-      <Route index element={<Home/>}/>
+      <Route index element={<Home />}/>
       <Route path="*" element={<NotFound/>}/>
       </Routes>
-    </BorswerRouter>
-      
+    </BrowserRouter>
+       
     </>
   )
 }
