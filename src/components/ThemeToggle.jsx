@@ -1,43 +1,53 @@
 import { useEffect, useState } from "react";
 import { Sun, Moon } from "lucide-react";
-import {cn} from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 export const ThemeToggle = () => {
-    const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true); // default state
 
-    useEffect(() => {
-        const storedTheme = localStorage.getItem("theme");
-        if(storedTheme === "dark"){
-            document.documentElement.classList.add("dark");
-            setIsDarkMode(true);
-        } else{
-            localStorage.setItem("theme", "light");
-            setIsDarkMode(false);
-        }
-    }, []);
+  useEffect(() => {
+  const storedTheme = localStorage.getItem("theme");
 
-    const toggleTheme = () => {
-        if(isDarkMode){
-            document.documentElement.classList.remove("dark");
-            localStorage.setItem("theme", "light");
-            setIsDarkMode(false);
-        } else{
-            document.documentElement.classList.add("dark");
-            localStorage.setItem("theme", "dark");
-            setIsDarkMode(true);
-        }
+  if (storedTheme === "light") {
+    // user chose light
+    document.documentElement.classList.remove("dark");
+    setIsDarkMode(false);
+  } else {
+    // DEFAULT → DARK MODE
+    document.documentElement.classList.add("dark");
+    setIsDarkMode(true);
+    if (!storedTheme) {
+      localStorage.setItem("theme", "dark");
     }
+  }
+}, []);
+
+
+  const toggleTheme = () => {
+    if (isDarkMode) {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+      setIsDarkMode(false);
+    } else {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+      setIsDarkMode(true);
+    }
+  };
+
   return (
     <button
-    onClick={toggleTheme}
-    className={cn(
+      onClick={toggleTheme}
+      className={cn(
         "fixed max-sm:hidden top-5 right-5 z-50 p-2 rounded-full transition-colors duration-300",
         "focus:outline-hidden"
-    )}
+      )}
     >
-        {isDarkMode ?( <Sun className="h-6 w-6 text-yellow-300" /> 
-       ): (  <Moon className="h-6 w-6 text-blue-900"/>
-    )}
-         </button>
+      {isDarkMode ? (
+        <Sun className="h-6 w-6 text-yellow-300" />
+      ) : (
+        <Moon className="h-6 w-6 text-blue-900" />
+      )}
+    </button>
   );
-}
+};
